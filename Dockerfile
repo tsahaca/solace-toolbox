@@ -4,8 +4,8 @@ RUN apk add --no-cache curl tar unzip
 WORKDIR /tmp
 
 # Replace this URL with the actual stm Linux binary tarball
-RUN curl -L -o stm.tar.gz "https://github.com/SolaceLabs/solace-tryme-cli/releases/download/v0.0.83/stm-alpine-v0.0.83.zip" \
-    && unzip stm-alpine-v0.0.83.zip
+RUN curl -L -o stm-alpine "https://github.com/SolaceLabs/solace-tryme-cli/releases/download/v0.0.83/stm-alpine-v0.0.83.zip" \
+    && unzip stm-alpine.zip
 
 # ---- Stage 2: final runtime image ----
 FROM alpine:3.20
