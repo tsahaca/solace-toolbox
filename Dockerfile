@@ -19,5 +19,19 @@ COPY --from=downloader /tmp/stm-alpine /usr/local/bin/stm
 
 RUN chmod +x /usr/local/bin/stm
 
+# Create a non-root user and group
+RUN addgroup -S client && adduser -S client -G client
+
+# Create a writable directory for the user (optional)
+RUN mkdir -p /app && chown -R client:client /app
+
+# If stm or other binaries need access to files, fix permissions
+# Example:
+RUN chown client:client /usr/local/bin/stm
+
+# Switch to non-root user
+USER client
+WORKDIR /app
+
 ENTRYPOINT ["stm"]
 CMD ["--help"]
