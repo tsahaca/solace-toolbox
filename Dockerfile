@@ -1,10 +1,13 @@
 # ---- Stage 1: fetch stm binary (from GitHub or your own URL) ----
 FROM alpine:3.20 AS downloader
-RUN apk add --no-cache curl tar unzip
+# Use this for Alpine v3.18+
+RUN apk update --no-check-certificate && apk add --no-cache --no-check-certificate curl tar unzip
+
+# RUN apk add --no-cache curl tar unzip
 WORKDIR /tmp
 
 # Replace this URL with the actual stm Linux binary tarball
-RUN curl -L -o stm-alpine.zip "https://github.com/SolaceLabs/solace-tryme-cli/releases/download/v0.0.83/stm-alpine-v0.0.83.zip" \
+RUN curl -k -L -o stm-alpine.zip "https://github.com/SolaceLabs/solace-tryme-cli/releases/download/v0.0.83/stm-alpine-v0.0.83.zip" \
     && unzip stm-alpine.zip
 
 # ---- Stage 2: final runtime image ----
